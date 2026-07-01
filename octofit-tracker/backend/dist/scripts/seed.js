@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
+const database_1 = require("../database");
 const user_1 = require("../models/user");
 const team_1 = require("../models/team");
 const activity_1 = require("../models/activity");
@@ -11,7 +12,7 @@ const leaderboard_1 = require("../models/leaderboard");
 const workout_1 = require("../models/workout");
 // Seed the octofit_db database with test data
 async function seed() {
-    await mongoose_1.default.connect('mongodb://127.0.0.1:27017/octofit_db');
+    await (0, database_1.connectDatabase)();
     await Promise.all([
         user_1.User.deleteMany({}),
         team_1.Team.deleteMany({}),
