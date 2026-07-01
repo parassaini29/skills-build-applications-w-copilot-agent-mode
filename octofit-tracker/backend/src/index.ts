@@ -1,6 +1,6 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import apiRoutes from './routes/api';
+import { connectDatabase } from './database';
 
 const app = express();
 const port = 8000;
@@ -13,7 +13,7 @@ app.use(express.json());
 app.use('/api', apiRoutes);
 
 async function start() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/octofit_db');
+  await connectDatabase();
   app.listen(port, () => {
     console.log(`Backend listening on port ${port}`);
     console.log(`API base URL: ${baseUrl}`);
