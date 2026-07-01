@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
 const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
-const apiHost = codespaceName
-  ? `https://${codespaceName}-8000.app.github.dev`
-  : 'http://localhost:8000';
+const apiUrl = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev/api/leaderboard/`
+  : 'http://localhost:8000/api/leaderboard/';
 
 function normalizeResponse(data) {
   if (Array.isArray(data)) return data;
@@ -20,7 +20,7 @@ export default function Leaderboard() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch(`${apiHost}/api/leaderboard/`)
+    fetch(apiUrl)
       .then((res) => res.json())
       .then((data) => setLeaders(normalizeResponse(data)))
       .catch(() => setError('Failed to load leaderboard.'));

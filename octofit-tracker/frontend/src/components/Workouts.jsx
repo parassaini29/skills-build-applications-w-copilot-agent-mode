@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
 const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
-const apiHost = codespaceName
-  ? `https://${codespaceName}-8000.app.github.dev`
-  : 'http://localhost:8000';
+const apiUrl = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev/api/workouts/`
+  : 'http://localhost:8000/api/workouts/';
 
 function normalizeResponse(data) {
   if (Array.isArray(data)) return data;
@@ -20,7 +20,7 @@ export default function Workouts() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch(`${apiHost}/api/workouts/`)
+    fetch(apiUrl)
       .then((res) => res.json())
       .then((data) => setWorkouts(normalizeResponse(data)))
       .catch(() => setError('Failed to load workouts.'));
