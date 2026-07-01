@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
 const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
-const apiBaseUrl = codespaceName
-  ? `https://${codespaceName}-8000.app.github.dev/api`
-  : 'http://localhost:8000/api';
+const apiHost = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev`
+  : 'http://localhost:8000';
 
 function normalizeResponse(data) {
   if (Array.isArray(data)) return data;
@@ -20,7 +20,7 @@ export default function Users() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch(`${apiBaseUrl}/users/`)
+    fetch(`${apiHost}/api/users/`)
       .then((res) => res.json())
       .then((data) => setUsers(normalizeResponse(data)))
       .catch(() => setError('Failed to load users.'));
