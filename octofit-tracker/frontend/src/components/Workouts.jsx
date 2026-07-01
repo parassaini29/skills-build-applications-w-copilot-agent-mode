@@ -1,0 +1,36 @@
+import { useEffect, useState } from 'react';
+import { API_BASE_URL, normalizeResponse, getHelpText } from '../api';
+
+export default function Workouts() {
+  const [workouts, setWorkouts] = useState([]);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/workouts`)
+      .then((res) => res.json())
+      .then((data) => setWorkouts(normalizeResponse(data)))
+      .catch(() => setError('Failed to load workouts.'));
+  }, []);
+
+  return (
+    <div className="container py-5">
+      <h2>Workouts</h2>
+      <p className="text-muted">{getHelpText()}</p>
+      {error && <div className="alert alert-danger">{error}</div>}
+      <div className="row">
+        {workouts.map((workout) => (
+          <div className="col-md-4" key={workout._id || workout.name}>
+            <div className="card mb-3">
+              <div className="card-body">
+                <h5 className="card-title">{workout.name}</h5>
+                <p className="card-text"><strong>Category:</strong> {workout.category}</p>
+                <p className="card-text"><strong>Difficulty:</strong> {workout.difficulty}</p>
+                <p className="card-text"><strong>Duration:</strong> {workout.duration} mins</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
